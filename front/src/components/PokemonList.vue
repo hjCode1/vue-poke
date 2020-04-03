@@ -4,6 +4,9 @@
             <img :src="imageUrl + pokemon.id + '.png'" alt width="96" height="96" />
             <h3>{{ pokemon.name }}</h3>
         </article>
+        <div id="scroll_trigger" ref="infiniteScroll">
+            <font-awesome-icon icon="spinner" class="icon alt" />
+        </div>
     </div>
 </template>
 
@@ -72,5 +75,14 @@ export default {
             margin: 0;
         }
     }
+}
+#scroll_trigger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 150px;
+    font-size: 2rem;
+    color: #efefef;
 }
 </style>
