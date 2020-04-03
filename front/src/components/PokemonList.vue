@@ -51,14 +51,15 @@ export default {
                 });
         },
         scrollTrigger() {
-            const observer = new IntersectionObserver(entries => {
+            const io = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
-                    if (entry.intersectionRatio > 0 && this.nextUrl) {
+                    console.log(entry.isIntersecting);
+                    if (entry.isIntersecting && this.nextUrl) {
                         this.next();
                     }
                 });
             });
-            observer.observe(this.$refs.infiniteScroll);
+            io.observe(this.$refs.infiniteScroll);
         },
         next() {
             this.currentUrl = this.nextUrl;
