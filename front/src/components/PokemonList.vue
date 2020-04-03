@@ -11,26 +11,29 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    props: ['imageUrl', 'apiUrl'],
+    props: {
+        imageUrl: String,
+        apiUrl: String
+    },
     data() {
         return {
             pokemons: [],
-            nextUrl: ''
+            nextUrl: '',
+            currentUrl: ''
         };
     },
     methods: {
         fetchData() {
-            let req = new Request(this.apiUrl);
-            fetch(req)
+            axios
+                .get(this.currentUrl)
                 .then(res => {
-                    if (res.status === 200) {
-                        return res.json();
-                    }
-                })
-                .then(data => {
-                    this.nextUrl = data.next;
-                    data.results.forEach(pokemon => {
+                    const { next, results } = res.data;
+
+                    this.nextUrl = next;
+                    results.forEach(pokemon => {
                         pokemon.id = pokemon.url
                             .split('/')
                             .filter(function(part) {
@@ -46,10 +49,28 @@ export default {
                 .catch(err => {
                     console.log(err);
                 });
+        },
+        scrollTrigger() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.intersectionRatio > 0 && this.nextUrl) {
+                        this.next();
+                    }
+                });
+            });
+            observer.observe(this.$refs.infiniteScroll);
+        },
+        next() {
+            this.currentUrl = this.nextUrl;
+            this.fetchData();
         }
     },
     created() {
+        this.currentUrl = this.apiUrl;
         this.fetchData();
+    },
+    mounted() {
+        this.scrollTrigger();
     }
 };
 </script>
