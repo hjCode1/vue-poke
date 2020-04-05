@@ -1,11 +1,11 @@
 <template>
     <div class="list">
-        <article v-for="(pokemon, index) in pokemons" :key="'poke' + index">
+        <article v-for="(pokemon, index) in pokemons" :key="'poke' + index" @click="setPokemonUrl(pokemon.url)">
             <img :src="imageUrl + pokemon.id + '.png'" alt width="96" height="96" />
             <h3>{{ pokemon.name }}</h3>
         </article>
         <div id="scroll_trigger" ref="infiniteScroll">
-            <font-awesome-icon icon="spinner" class="icon alt" />
+            <font-awesome-icon icon="spinner" class="icon" />
         </div>
     </div>
 </template>
@@ -64,6 +64,9 @@ export default {
         next() {
             this.currentUrl = this.nextUrl;
             this.fetchData();
+        },
+        setPokemonUrl(url) {
+            this.$emit('setPokemonUrl', url);
         }
     },
     created() {

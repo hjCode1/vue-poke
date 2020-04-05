@@ -1,7 +1,8 @@
 <template>
     <div class="container">
-        <h1>te</h1>
-        <PokemonList :imageUrl="imageUrl" :apiUrl="apiUrl" />
+        <h1>Pokemon</h1>
+        <PokemonList :imageUrl="imageUrl" :apiUrl="apiUrl" @setPokemonUrl="setPokemonUrl" />
+        <PokemonDetail v-if="showDetail" :pokemonUrl="pokemonUrl" :imageUrl="imageUrl" @closeDetail="closeDetail" />
     </div>
 </template>
 
@@ -14,8 +15,20 @@ export default {
     data() {
         return {
             imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/',
-            apiUrl: 'https://pokeapi.co/api/v2/pokemon'
+            apiUrl: 'https://pokeapi.co/api/v2/pokemon',
+            pokemonUrl: '',
+            showDetail: false
         };
+    },
+    methods: {
+        setPokemonUrl(url) {
+            this.pokemonUrl = url;
+            this.showDetail = true;
+        },
+        closeDetail() {
+            this.pokemonUrl = '';
+            this.showDetail = false;
+        }
     },
     components: {
         PokemonSearch,
