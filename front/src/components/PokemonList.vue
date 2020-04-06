@@ -65,7 +65,7 @@ export default {
             this.fetchData();
         },
         setPokemonUrl(url) {
-            console.log('set poke: ', url);
+            // console.log('set poke: ', url);
             this.$emit('setPokemonUrl', url);
         }
     },
