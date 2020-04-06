@@ -53,7 +53,6 @@ export default {
         scrollTrigger() {
             const io = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
-                    console.log(entry.isIntersecting);
                     if (entry.isIntersecting && this.nextUrl) {
                         this.next();
                     }
@@ -66,6 +65,7 @@ export default {
             this.fetchData();
         },
         setPokemonUrl(url) {
+            console.log('set poke: ', url);
             this.$emit('setPokemonUrl', url);
         }
     },
