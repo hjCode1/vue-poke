@@ -24,7 +24,15 @@
                         {{ value.type.name }}
                     </div>
                 </div>
+                <h3>Abilities</h3>
+                <div class="abils">
+                    <div class="abil" v-for="(value, index) in pokemon.abilities" :key="'value' + index">
+                        {{ value.ability.name }}
+                    </div>
+                </div>
             </div>
+            <h2 v-else>The Pokemon was not found</h2>
+            <button class="close" @click="closeDetail">close</button>
         </div>
         <font-awesome-icon v-else icon="spinner" class="icon" />
     </div>
@@ -55,6 +63,9 @@ export default {
                 .catch(err => {
                     console.log(err);
                 });
+        },
+        closeDetail() {
+            this.$emit('closeDetail');
         }
     },
     created() {
@@ -68,7 +79,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    flex-direction: column;
     position: fixed;
     top: 0;
     left: 0;
@@ -127,7 +137,54 @@ export default {
                     float: right;
                 }
             }
+            h3 {
+                width: 90%;
+                max-width: 400px;
+                border-bottom: 1px solid #ccc;
+            }
+            .types,
+            .abils {
+                display: flex;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                width: 90%;
+                max-width: 400px;
+                .type,
+                .abil {
+                    margin: 0 10px 10px 0;
+                    padding: 5px 10px;
+                    border-radius: 20px;
+                    color: #fff;
+                    font-size: 1rem;
+                    letter-spacing: 2px;
+                    text-transform: capitalize;
+                    word-wrap: none;
+                    word-break: keep-all;
+                }
+                .type {
+                    background: #0a2e50;
+                }
+                .abil {
+                    background: #c73015;
+                }
+            }
         }
+        .close {
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            background: #333;
+            color: #efefef;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+    }
+
+    .icon {
+        font-size: 2rem;
+        color: #efefef;
     }
 }
 </style>
